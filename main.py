@@ -26,13 +26,11 @@ def handle_document(message):
             bot.send_message(message.chat.id, "Ошибка: отсутствуют необходимые столбцы в загруженном файле.")
             return
 
-        # Получаем последнюю строку
         last_row = df.iloc[-1]
         last_row_message = f"*Последнее добавление:*\n\n*Title:* {last_row['title']}\n*URL:* {last_row['url']}\n*XPath:* {last_row['xpath']}"
 
         bot.send_message(message.chat.id, last_row_message, parse_mode='Markdown')
 
-        # Обработка последней строки для получения цены и вставки в базу данных
         try:
             price = parse_price(last_row['url'], last_row['xpath'])
             if price is not None: 
